@@ -1,0 +1,18 @@
+<launch>
+
+    <arg name="arg_topic_to_subscribe" default="move_base_simple/goal"/>
+    <arg name="arg_topic_to_publish" default="test_bench_action_server/goal"/>
+    <arg name="arg_accuracy_along_x" default="0.2"/>
+    <arg name="arg_accuracy_along_y" default="0.2"/>
+
+    <node name="action_server" pkg="test_bench_action_server" type="action_server.py" output="screen">
+        <param name="accuracy_along_x" value="$(arg arg_accuracy_along_x)" />
+        <param name="accuracy_along_y" value="$(arg arg_accuracy_along_y)" />
+    </node>
+
+    <node name="topic_publisher" pkg="test_bench_action_server" type="topic_publisher.py" output="screen">
+        <param name="topic_to_subscribe" value="$(arg arg_topic_to_subscribe)" />
+        <param name="topic_to_publish" value="$(arg arg_topic_to_publish)" />
+    </node>
+    
+</launch>

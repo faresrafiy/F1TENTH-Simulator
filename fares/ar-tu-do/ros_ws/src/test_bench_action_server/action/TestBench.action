@@ -1,0 +1,10 @@
+# Define the goal
+geometry_msgs/PoseStamped target_pose
+---
+# Define the result
+float32 timePassed
+float32 distanceTravaled
+float32 averageVelocity
+float32 maxVelocity
+---
+# Define a feedback message
