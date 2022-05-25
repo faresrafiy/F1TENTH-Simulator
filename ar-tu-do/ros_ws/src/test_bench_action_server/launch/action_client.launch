@@ -1,0 +1,9 @@
+<launch>
+
+    <arg name="arg_topic_to_publish" default="move_base_simple/goal"/>
+
+    <node name="action_client" pkg="test_bench_action_server" type="action_client.py" output="screen">
+        <param name="topic_to_publish" value="$(arg arg_topic_to_publish)" />
+    </node>
+    
+</launch>
