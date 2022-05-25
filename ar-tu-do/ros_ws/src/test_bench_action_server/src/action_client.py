@@ -6,11 +6,11 @@ from geometry_msgs.msg import PoseStamped
 from test_bench_action_server.msg import TestBenchAction, TestBenchActionGoal, TestBenchGoal
 from move_base_msgs.msg import MoveBaseGoal
 
-def action_client(goal_list) :
+def action_client(topic_to_publish, goal_list) :
     # Create Action Client
     client = actionlib.SimpleActionClient('test_bench_action_server', TestBenchAction)
     # Create Publisher
-    pub = rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=5)
+    pub = rospy.Publisher(topic_to_publish, PoseStamped, queue_size=5)
     rospy.sleep(0.500)
 
 
@@ -44,34 +44,26 @@ if __name__ == "__main__":
     rospy.init_node("action_client")
     rospy.sleep(0.200)
     
+    print("-----------------------------------------------------------")
+    print("Welcome to the Action Client of TeRa Testbench for Race algorithms")
+    print("-----------------------------------------------------------")
+    print("The metrics are the time, the distance traveled, ")
+    print("the average velocity and the maximum velocity.")
+    print("This Action Client sends 3 waypoints to the navigation stack and the TeRa.")
+    print("The 3 waypoints form a lap on the race circuit.")
+    print("-----------------------------------------------------------")
 
-
-    # print("-----------------------------------------------------------")
-    # print("Welcome to the Test Bench")
-    # print("--------------------------")
-    # print("The metrics are the time, the distance traveled, ")
-    # print("the average velocity and the maximum velocity.")
-    # print("You can publish goals using an Action Client or RViz. ")
-    # print("-----------------------------------------------------------")
+    topic_to_publish = rospy.get_param('~topic_to_publish')
 
     goal_list = []
 
     goal1 = PoseStamped()
 
     # 1ste point to get until the Finish Line
-    # goal1.header.frame_id = "map"
-    # goal1.pose.position.x = 1.77863669395
-    # goal1.pose.position.y = 0.152771949768
-    # goal1.pose.position.z = 0.0
-    # #z: -0.0600690511667
-    # goal1.pose.orientation.w = 0.998194224133
-    # goal_list.append(goal1)
-    
     goal1.header.frame_id = "map"
     goal1.pose.position.x = 1.98562955856
     goal1.pose.position.y = 0.196025371552
     goal1.pose.position.z = 0.0
-    #z: -0.0600690511667
     goal1.pose.orientation.w = 0.998194224133
     goal_list.append(goal1)
 
@@ -97,15 +89,6 @@ if __name__ == "__main__":
     goal_list.append(goal3)
     
     # 4th point
-    # goal4 = PoseStamped()
-    # goal4.header.frame_id = "map"
-    # goal4.pose.position.x = 1.955078125
-    # goal4.pose.position.y = 0.123607635498
-    # goal4.pose.position.z = 0.0
-    # goal4.pose.orientation.z = -0.0374480933084
-    # goal4.pose.orientation.w = 0.999298574155
-    # goal_list.append(goal4)
-
     goal4 = PoseStamped()
     goal4.header.frame_id = "map"
     goal4.pose.position.x = 1.98562955856
@@ -115,15 +98,15 @@ if __name__ == "__main__":
     goal_list.append(goal4)
 
 
-    results = action_client(goal_list)
+    results = action_client(topic_to_publish, goal_list)
 
     j = 1
     for i in results :
         print("%s" %j)
         print("Goal achieved in time: %s s" %i.timePassed)
-        print("Distance Travaled: %s" %i.distanceTravaled)
-        print("Average Velocity: %s" %i.averageVelocity)
-        print("Maximum Velocity: %s" %i.maxVelocity)
+        print("Distance Travaled: %s m" %i.distanceTravaled)
+        print("Average Velocity: %s m/s" %i.averageVelocity)
+        print("Maximum Velocity: %s m/s" %i.maxVelocity)
         j += 1
 
     print("end")
