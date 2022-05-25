@@ -208,16 +208,16 @@ class ActionServer():
                         previous_position_x = current_position_x
                         previous_position_y = current_position_y
                         i += 1
-                    print("Distance Travaled: %s" %total_distance)
+                    print("Distance Travaled: %s m" %total_distance)
                     result.distanceTravaled = total_distance
 
                     #Calculate the average velocity
                     average_velocity = total_distance / time_passed
-                    print("Average Velocity: %s" %average_velocity)
+                    print("Average Velocity: %s m/s" %average_velocity)
                     result.averageVelocity = average_velocity
 
                 # The maxixmum velocity
-                print("Maximum Velocity: %s" %self.max_velocity)
+                print("Maximum Velocity: %s m/s" %self.max_velocity)
                 result.maxVelocity = self.max_velocity
 
                 self.action_server.set_succeeded(result)
@@ -237,8 +237,8 @@ if __name__ == "__main__":
     accuracy_along_y = rospy.get_param('~accuracy_along_y')
 
     print("-----------------------------------------------------------")
-    print("Welcome to the Test Bench")
-    print("--------------------------")
+    print("Welcome to Tera: Testbench for Race algorithms")
+    print("-----------------------------------------------")
     print("The metrics are the time, the distance traveled, ")
     print("the average velocity and the maximum velocity.")
     print("You can publish goals using an Action Client or RViz. ")
